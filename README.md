@@ -30,7 +30,7 @@ The `makev20` utility has the following arguments:
 | `output_flag` |`-o <path_to_output>` | `makev20 -i <some_input_path> -o <some_output_path>` | The `-o` flag denotes your output destination, it is immediately followed by a path to the exported file. | requires a corresponding `-i` flag to convert ROMs.|
 | `overwrite_flag` |`[-ow]` | `makev20 -i <some_input_path> -o <some_output_path> -ow` | The `-ow` flag forces `makev20` to write a new file to the specified location, even if it overwrites an existing file. | can only be performed on conversion operations. |
 | `ROM_name_flag` | `[-n <"ROM_NAME">]` | `makev20 -i <some_input_path> -o <some_output_path> -n <"ROM_NAME">` | The `-n` flag allows you to specify a name for the ROM. | At most 32 ASCII characters (anything more will be truncated). |
-| `Auto-Exec_flag` | `[-ae <"COMMAND">]` | `makev20 -i <some_input_path> -o <some_output_path> -ae "<COMMAND>"` | The `-ae` flag allows you to specify a command to be executed on boot; this is very useful for games like the Scott Adam's Adventure series. | At most 22 ASCII characters long (will be truncated). |
+| `Auto_Exec_flag` | `[-ae <"COMMAND">]` | `makev20 -i <some_input_path> -o <some_output_path> -ae "<COMMAND>"` | The `-ae` flag allows you to specify a command to be executed on boot; this is very useful for games like the Scott Adam's Adventure series. | At most 22 ASCII characters long (will be truncated). |
 | `video_type_flag` | `[-v <ntsc/pal>]` | `makev20 -i <some_input_path> -o <some_output_path> -v pal` | While most ROMs seem fairly platform agnostic, there are a few that rely on the different timings, it makes sense then, to allow a ROM to track its own video mode. | defaults to ntsc if not set. |
 | | | | | |
 | | | | | |
