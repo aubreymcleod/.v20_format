@@ -54,7 +54,11 @@ dkms.conf
 
 #environment files
 .DS_Store
+
+#IDE specific files
+.idea
+CMakeLists.txt
+cmake-build-debug/
 modules.xml
 V20-generator.iml
 vcs.xml
-.idea
