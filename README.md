@@ -1,18 +1,6 @@
-# Vic-20 ROM format
+# Vic20 ROM format
 
-### Preamble:
-I find it terribly frustrating that there currently exists no good format for loading and storing VIC-20 ROMS.
-Initially, I realized this was a problem when tinkering with a Raspberry Pi build of VICE; the fact that some 
-cartridge ROMs are stored in multiple files made the process of loading games with a controller very inconvenient.
-  
-While, I originally got around this by writing a simple script to load the files via VICE's CLI, I would rather 
-build something more stable, with slightly more longevity.
-
-Accordingly, I intend to devise a standard for VIC-20 ROM files (detailed in the V20v1.md file), and create a command line utility
-for converting existing ROMs into the new .v20 format.
-  
-In the long term, I might create a UI based tool,
-and I might even go so far as to patch VICE to accept these .v20 files; the key thing here is getting the ball rolling.
+WIP
 
 ### The makev20 utility:
 The current specification uses a tool called `makev20`. The tool takes (multiple) existing `.crt`, `.prg`, and miscellaneous binaries, and attempts to convert them into our eponymous `.v20` format. Some binaries have useful `2 byte` addressing information embedded into them, `makev20` will attempt to automatically assign these binaries to the correct address. Unfortunately, you will have to tell `makev20` where binaries that lack this information are meant to live.
@@ -44,3 +32,34 @@ The `makev20` utility has the following arguments:
 | `version_flag` | `-version` | `makev20 -version` | The `-version` flag displays the version number of the current installation. | |
 
 Please note that `makev20` attempts to manage the address-space, so a `16kb` ROM sent to `$4000-$5FFF` will fill bank `$6000-$7FFF` as well, however a block sent to `$6000-$7FFF` will take precedence and overwrite the original large block in that region.
+
+
+### Project Goals
+- [X] Finalize `.v20-1` standard.
+- [X] Implement minimum functionality to convert existing ROMs to the `.v20-1` format; `makev20` utility.
+- [ ] Document code.
+- [ ] Rewrite messy source-files.
+- [ ] Clean-up `.md` documentation.
+- [ ] Write Vice-wrapper (done in a separate repo).
+- [ ] Fork Vice and implement native `.v20` support (done in a separate repo).
+- [ ] Create optional GUI frontend for `makev20` (done in a separate repo).
+- [ ] Examine potential updates to standards
+- [ ] TBD
+
+  
+### Why this exists? (by Aubrey McLeod)
+If you are anything like me, you love classic computing platforms like Commodore's PET, VIC-20, C64, etc. In spite of their limitations, or perhaps even because of them, there is something indescribably magical about these machines; in a sense, they tipafy the eras' of their releases. While the C64 was by far the most successful of Commodore's offerings, the VIC-20 presented a compelling low cost option and introduced countless children to computing. Being the first computer model to sell 1,000,000 units, this little bread-binned beauty was key to Jack Tramiel's strategy for undercutting the competition, and arguably paved the way the much lauded C64.
+
+Surprisingly, I only got started with Commodore machine's in the mid 2010s when I spent a summer restoring my grandparents old PET 4032 (good ol' fat 40). After that, I managed to get a couple of VIC-20s on the cheap and had a great deal of fun playing both cartridge and tape games, while trying to code within the 3.5k limits. Saddly, faulty old power supplies have long since killed my dear VIC-20s, but I still enjoyed my time with them. 
+
+Thankfully, the advent of low-cost/low-power ARM based computers has made it easier than ever to recreate the magic of these old micros (here's lookin at you, Raspberry Pi 400). When I first set up a Vice install on my Pi 4, I discovered the problematic nature of Vic-20 cartridge ROMs; there existed no convenient way to load most cartridges with a single action. To the best of my knowledge, there exists no single ROM format that is sufficiently complex enough to load an entire game in to the Vic's split memory map, at least at time of writing (Dec 2020). While the pseudo-standard of including the 2 byte address before the ROM data is widely used, many games are still split between two separate files. In the context of my Raspberry Pi 4 running RetroPie, I initially hacked together a [wrapper written in Bash](https://retropie.org.uk/forum/topic/26186/tutorial-how-to-load-vic-20-cartridges-straight-from-emulationstation?_=1608355854478) to automatically load archived ROM files with specific name-flags into Vice. Unfortunately, this always felt a little bit slap-dash, and dirty. As a personal project during my third-year exams, I decided that the perfect destresser would be to impose some degree of order onto the Vic-20 landscape: design a new format which the community clearly needs. 
+
+One of the big problems with tackling a problem some 40 years in the making, is that the web is full of prexisting ROMs which, more-or-less, work; no-one is going to use a new format as their baseline. It made sense to me, then, to make a utility which would allow all/most of the existing ROMs to be converted fairly easily. The other big problem is of course that no existing emulator supports a new format out of the gate. After finalizing a version of the `v20` standard/conversion utility, I hope to address this particular process in two steps:
+1. creating a script wrapper to load `.v20 files` into existing builds of Vice through command line arguments.
+2. fork Vice, patch in native support for `.v20 files`, and hope that given time the Vice team will see the merits of my format.
+
+The wrapper is a bit of a stop-gap, and probalby won't be able to do everything I would like to with this format. I do not believe that Vice supports `basic` instruction injection directly through the command line; there may be a work arounds based on loading a tape/disk image as well, but I need to experiment.
+
+In the long term, I hope to create a GUI based variant of this utility. It will not of course, be as portable as the CLI version but I would try to target all major platforms: Windows, Linux, and Mac. 
+
+tl;dr I wanted to fix an old problem, that was bothering me.
