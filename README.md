@@ -1,4 +1,7 @@
 # Vic20 ROM format
+The `.v20 format` is a, moderately, simple format for Vic-20 cartridge ROMs, which attempts to consolidate the existing multi-file hell of emulating the Vic-20. This repo defines both a standard for the file format, and offers a utility for converting existing ROMs into a more manageable format. Related projects include [a wrapper](https://github.com/aubreymcleod/.v20_format)(TBA) which loads `.v20 files` into the popular Vice emulator, [a fork of Vice](https://github.com/aubreymcleod/.v20_format)(TBA), and a [GUI tool](https://github.com/aubreymcleod/.v20_format) (tBA) for making this process just a little bit more accessable.
+
+
 
 WIP
 
