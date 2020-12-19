@@ -1,0 +1,14 @@
+//
+// Created by Aubrey McLeod on 2020-12-15.
+//
+
+#ifndef MAKEV20_GLOBAL_SETTINGS_H
+#define MAKEV20_GLOBAL_SETTINGS_H
+
+#define VERSION 1
+#define HEADER_LENGTH 64
+#define BLOCK_SIZE 4096
+#define TOTAL_BLOCKS 8
+#define ADDRESSABLE_LOCATIONS 5
+
+#endif //MAKEV20_GLOBAL_SETTINGS_H
