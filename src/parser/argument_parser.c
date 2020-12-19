@@ -86,7 +86,6 @@
 #include "argument_parser.h"
 #include "parser_execeptions.h"
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -394,23 +393,29 @@ void populate_CLI_INFO(uint8_t argc, cli_info *Info){
         switch(arg_mask[i]){
             case MEMORY_2000_ARG_ID:
                 Info->index_20=i;
+                Info->total_input_qty++;
                 break;
             case MEMORY_4000_ARG_ID:
                 Info->index_40=i;
+                Info->total_input_qty++;
                 break;
             case MEMORY_6000_ARG_ID:
                 Info->index_60=i;
+                Info->total_input_qty++;
                 break;
             case MEMORY_A000_ARG_ID:
                 Info->index_a0=i;
+                Info->total_input_qty++;
                 break;
             case MEMORY_B000_ARG_ID:
                 Info->index_b0=i;
+                Info->total_input_qty++;
                 break;
 
             case INPUT_ARG_ID:
                 Info->unknown_inputs[Info->unknown_input_qty]=i;
                 Info->unknown_input_qty++;
+                Info->total_input_qty++;
                 break;
 
 
