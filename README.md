@@ -1,7 +1,11 @@
 # Vic20 ROM format
-The `.v20 format` is a simple format for Vic-20 cartridge ROMs, which attempts to streamline the existing multi-file hell of emulating the Vic-20. This repo defines both a standard for the file format, and offers a utility (`makev20`) for converting existing ROMs into a more manageable format. Related projects include a wrapper (to be released) which loads `.v20 files` into the popular Vice emulator, a fork of Vice (to be released), and a GUI tool(to be released) for making this process just a little bit more accessable. 
+The `.v20 format` is a simple format for Vic-20 cartridge ROMs, which attempts to streamline the existing multi-file hell of emulating the Vic-20. This repo defines both a standard for the file format, offers a utility (`makev20`) for converting existing ROMs into a more manageable format, and provides a wrapper script to load `.v20 files` into the popular Vice Emulator (currently only a Mac/Linux script is provided, however if someone wants to contribute a Windows `.bat` file, feel free to contribute).
 
-`makev20` itself is written in C, and strives to be portable. While I cannot provide a prebuilt version for every single operating system/architecture, I can at least provide sourcecode so that you can build the utility on your target platform. 
+Future project goals include a fork of Vice which natively supports `.v20 files` (to be released) and a GUI tool (to be released) for making this process just a little bit more accessable. 
+
+`v20_loader` scripts are simple to use; you will need to update the script yourself to tell it where your `xVic` installation is, but that is single line change. Once you fix your copy, just run the script with the path to your ROM of choice as an argument.
+
+`makev20` itself is written in C, and strives to be portable; while I cannot provide a prebuilt version for every single operating system/architecture, I can at least provide sourcecode so that you can build the utility on your target platform. 
   
 This project is open source so feel free to contribute or even make your own radical alterations. My only ask is that we try not to fragment the ecosystem, collaborate on standard version rather than making a wholley proprietary new varient.
 
@@ -10,6 +14,12 @@ Any and all official releases of the `.v20` standard are defined in the `.standa
 
 Ideally, new standards will not alter`.v20` too radically and ephasize maintaining backwards compatability, however all standards will include a version number in their header to help prevent undesired breaking.
 
+### The v20_loader script
+The `v20_loader` script takes a `.v20` as an argument, and will attempt to parse the file and inject it into Vice using Vice's handy CLI. You can find the script in the `vice_wrappers` directory.
+
+Currently only a Bash (Linux/Mac OS) script exists, (I don't have a Windows programming environment so I couldn't make a native `.bat` script). If you want to contribute one, you are more than welcome to :)
+
+*NOTE: YOU MUST UPDATE THE SCRIPT TO POINT TO YOUR VICE INSTALLATION*
 
 ### The makev20 utility:
 The `makev20` is a utility for converting existing ROMs (`.bin`, `.prg`, `.crt`, `.20`, `.40`, `.60`, `.a0`, `.b0`, etc) into the .v20 format. The tool takes (multiple) existing ROMs as inputs and outputs new single `.v20` file derived from its inputs. Many binaries are encoded with a `2 byte` addressing information embedded into them; if this is present `makev20` will attempt to assign these binaries to their listed addresses. Unfortunately, for ROMs that lack this informaton, you will need to tell `makev20` where these binaries are meant to live.
@@ -45,10 +55,10 @@ Please note that `makev20` attempts to manage the address-space, so a `16kb` ROM
 ### Project Goals
 - [X] Finalize `.v20-1` standard.
 - [X] Implement minimum functionality to convert existing ROMs to the `.v20-1` format; `makev20` utility.
-- [ ] Document code.
-- [ ] Rewrite messy source-files.
+- [X] Document code.
+- [X] Rewrite messy source-files.
 - [X] Clean-up `.md` documentation.
-- [ ] Write Vice-wrapper (done in a separate repo).
+- [X] Write Vice-wrapper.
 - [ ] Fork Vice and implement native `.v20` support (done in a separate repo).
 - [ ] Create optional GUI frontend for `makev20` (done in a separate repo).
 - [ ] Examine potential updates to standards
