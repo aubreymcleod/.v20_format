@@ -83,5 +83,5 @@ tl;dr I wanted to fix an old problem, that was bothering me.
 
 ### Related project
 - GUI Tool (coming soon)
-- Wrapper Scripts (coming soon)
+- Windows Wrapper Script (coming soon)
 - Patched Vice (coming soon)
