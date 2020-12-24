@@ -5,8 +5,8 @@
 
 MAXIMUM_SUPPORTED_VERSION=1
 
-EMULATOR="/Applications/Vice/bin/xvic"
-#EMULATOR="PATH_TO_EMULATOR" #update this with the path to your xVic executable.
+#EMULATOR="/Applications/Vice/bin/xvic" #Debug testing. My local path to vice
+EMULATOR="PATH_TO_EMULATOR" #update this with the path to your xVic executable.
 ROM="$1"
 
 TEMP_DIR_NAME=".temp_v20"
