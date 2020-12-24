@@ -5,7 +5,8 @@
 
 MAXIMUM_SUPPORTED_VERSION=1
 
-EMULATOR="PATH_TO_EMULATOR" #update this with the path to your xVic executable.
+EMULATOR="/Applications/Vice/bin/xvic"
+#EMULATOR="PATH_TO_EMULATOR" #update this with the path to your xVic executable.
 ROM="$1"
 
 TEMP_DIR_NAME=".temp_v20"
@@ -97,56 +98,43 @@ if [[ "$(echo ${RAW_BYTES:0:14} | xxd -r -p)" == "VIC-20v" ]]; then
   if (( $MAP & 128 )); then
     lenB=1
   fi
-
+  
   #make files
   mkdir "$WORKING_DIRECTORY/$TEMP_DIR_NAME"
   cd "$WORKING_DIRECTORY/$TEMP_DIR_NAME"
+  
+  echo "DEBUG pwd: $PWD"
 
   if [[ $len2 != 0 ]]; then
     echo "${RAW_BYTES:$(( 128 + offset2 * (4096*2) )):$(( len2*4096*2))}" | xxd -r -p - rom.20
+    cart2[0]="-cart2"
+    cart2[1]="$PWD/rom.20"
   fi
 
   if [[ $len4 != 0 ]]; then
     echo "${RAW_BYTES:$(( 128 + offset4 * (4096*2) )):$(( len4*4096*2))}" | xxd -r -p - rom.40
+    cart4[0]="-cart4"
+    cart4[1]="$PWD/rom.40"
   fi
 
   if [[ $len6 != 0 ]]; then
     echo "${RAW_BYTES:$(( 128 + offset6 * (4096*2) )):$(( len6*4096*2))}" | xxd -r -p - rom.60
+    cart6[0]="-cart6"
+    cart6[1]="$PWD/rom.60"
   fi
 
   if [[ $lenA != 0 ]]; then
     echo "${RAW_BYTES:$(( 128 + offsetA * (4096*2) )):$(( lenA*4096*2))}" | xxd -r -p - rom.a0
+    cartA[0]="-cartA"
+    cartA[1]="$PWD/rom.a0"
   fi
 
   if [[ $lenB != 0 ]]; then
     echo "${RAW_BYTES:$(( 128 + offsetB * (4096*2) )):$(( lenB*4096*2))}" | xxd -r -p - rom.b0
+    cartB[0]="-cartB"
+    cartB[1]="$PWD/rom.b0"
   fi
 
-  for f in $PWD/*; do
-    #assign ROM to correct memory locations
-    case "$f" in
-      *.a0 )
-        cartA[0]="-cartA"
-        cartA[1]="$f"
-      ;;
-      *.b0 )
-        cartB[0]="-cartB"
-        cartB[1]="$f"
-      ;;
-      *.20 )
-        cart2[0]="-cart2"
-        cart2[1]="$f"
-      ;;
-      *.40 )
-        cart4[0]="-cart4"
-        cart4[1]="$f"
-      ;;
-      *.60 )
-        cart6[0]="-cart6"
-        cart6[1]="$f"
-      ;;
-      esac
-  done
 
   #INIT EMULATOR
   "$EMULATOR" "${ae_flag[@]}" "${video_flag}" "${cart2[@]}" "${cart4[@]}" "${cart6[@]}" "${cartA[@]}" "${cartB[@]}"
@@ -156,8 +144,6 @@ if [[ "$(echo ${RAW_BYTES:0:14} | xxd -r -p)" == "VIC-20v" ]]; then
   rm -r $TEMP_DIR_NAME
 
 
-
 else
   echo "Supplied file is not a correctly formatted v20 file."
-  return 1
 fi
