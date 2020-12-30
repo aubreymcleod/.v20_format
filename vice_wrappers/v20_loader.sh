@@ -102,8 +102,6 @@ if [[ "$(echo ${RAW_BYTES:0:14} | xxd -r -p)" == "VIC-20v" ]]; then
   #make files
   mkdir "$WORKING_DIRECTORY/$TEMP_DIR_NAME"
   cd "$WORKING_DIRECTORY/$TEMP_DIR_NAME"
-  
-  echo "DEBUG pwd: $PWD"
 
   if [[ $len2 != 0 ]]; then
     echo "${RAW_BYTES:$(( 128 + offset2 * (4096*2) )):$(( len2*4096*2))}" | xxd -r -p - rom.20
