@@ -24,10 +24,10 @@
 $maximumSupportedVersion=1
 
 # The path to the current script.
-$scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
+$scriptPath = $MyInvocation.MyCommand.Definition
 
 # VICE emulator is expected to be found in the same folder as the script.
-$emulatorPath = "$scriptPath\xvic.exe"
+$emulatorPath = "$(Split-Path -Parent $scriptPath)\xvic.exe"
 $emulatorParam = ""
 
 # Check that VICE emulator is in the script folder.
@@ -43,7 +43,7 @@ if($args.Count -eq 0){
     New-ItemProperty -path HKCU:\SOFTWARE\Classes\.v20 -Name "(default)" -PropertyType String -Value v20_loader | Out-Null
  
     New-Item -Path HKCU:\SOFTWARE\Classes\v20_loader\shell\open\command -Force | Out-Null
-    New-ItemProperty -path HKCU:\SOFTWARE\Classes\v20_loader\shell\open\command -Name "(default)" -PropertyType String -Value "powershell.exe -file `"C:\Users\k\Downloads\GTK3VICE 3.4\v20_loader.ps1`" `"%1`"" | Out-Null
+    New-ItemProperty -path HKCU:\SOFTWARE\Classes\v20_loader\shell\open\command -Name "(default)" -PropertyType String -Value "powershell.exe -file `"$scriptPath`" `"%1`"" | Out-Null
  
     New-Item -Path HKCU:\SOFTWARE\Classes\v20_loader\DefaultIcon -Force | Out-Null
     New-ItemProperty -path HKCU:\SOFTWARE\Classes\v20_loader\DefaultIcon -Name "(default)" -PropertyType String -Value "$emulatorPath,0" | Out-Null
